@@ -72,3 +72,26 @@ extensive testing done yet, so use at your own risk!
 
 This wouldn't have been possible without the excellent writeup on the process
 of working with Motion Photos [here](https://medium.com/android-news/working-with-motion-photos-da0aa49b50c).
+
+
+# Convert .HEIC to .JPG
+Modern IPhone photos are stored in '.HEIC' format. To convert it, we need to install and convert it.
+
+```bash
+sudo apt install libheif-examples
+find . -type f -name "*.HEIC" | xargs -n1 -I {} /bin/bash -c 'heif-convert {} {}.JPG'  
+```
+
+Then, It's heic file will convert to JPG, However, to get pairing clip, we need to change filename since converted, JPG file name will me `*.HEIC.JPG`
+
+### Change name Script
+```bash
+#!/bin/bash
+
+for i in `find . -name "*.HEIC*"`
+do
+	mv $i `echo $i | sed -e 's/.HEIC//'`
+done
+```
+
+Then, You're Ready to go!
